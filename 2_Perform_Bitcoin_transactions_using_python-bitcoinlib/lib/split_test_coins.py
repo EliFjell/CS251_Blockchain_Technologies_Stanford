@@ -14,6 +14,15 @@ from config import (my_private_key, my_public_key, my_address,
 
 from utils import create_txin, create_txout, broadcast_transaction
 
+import os
+from dotenv import load_dotenv
+load_dotenv()
+MY_PRIVATE_KEY = os.getenv("MY_PRIVATE_KEY")
+MY_TRANSACTION_HASH = os.getenv("my_transaction_hash")
+ALICE_SECRET_KEY_BTC = os.getenv("ALICE_SECRET_KEY_BTC")
+ALICE_BTC_TRANSACTION_HASH = os.getenv("alice_btc_transaction_hash")
+BOB_SECRET_KEY_BCY = os.getenv("BOB_SECRET_KEY_BCY")
+BOB_BCY_TRANSACTION_HASH = os.getenv("bob_bcy_transaction_hash")
 
 
 def split_coins(amount_to_send, txid_to_spend, utxo_index, n, network):
@@ -37,15 +46,15 @@ if __name__ == '__main__':
 
     ######################################################################
     # TODO: set these parameters correctly
-    private_key = None
+    #private_key = CBitcoinSecret(ALICE_SECRET_KEY_BTC)
+    private_key = CBitcoinSecret.from_secret_bytes(x(BOB_SECRET_KEY_BCY))
     public_key = private_key.pub
     address = P2PKHBitcoinAddress.from_pubkey(public_key)
 
-    amount_to_send = None # amount of BTC in the output you're splitting minus fee
-    txid_to_spend = (
-        'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
-    utxo_index = None # index of the output you are spending, indices start at 0
-    n = None # number of outputs to split the input into
+    amount_to_send = 0.0009 # amount of BTC in the output you're splitting minus fee
+    txid_to_spend = (BOB_BCY_TRANSACTION_HASH)
+    utxo_index = 0 # index of the output you are spending, indices start at 0
+    n = 3 # number of outputs to split the input into
     # For n, choose a number larger than what you immediately need, 
     # in case you make mistakes.
     ######################################################################

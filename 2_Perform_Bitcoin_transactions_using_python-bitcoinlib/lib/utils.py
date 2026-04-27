@@ -34,17 +34,36 @@ def create_signed_transaction(txin, txout, txin_scriptPubKey,
                  tx, 0, (SCRIPT_VERIFY_P2SH,))
     return tx
 
+#def broadcast_transaction(tx, network):
+#    if network == 'btc-test3':
+#        url = 'https://api.blockcypher.com/v1/btc/test3/txs/push'
+#    elif network == 'bcy-test':
+#        url = 'https://api.blockcypher.com/v1/bcy/test/txs/push'
+#    else:
+#      raise InvalidArgumentException("Network must be one of either 'btc-test3', 'bcy-test'")#
+
+#    raw_transaction = b2x(tx.serialize())
+#    headers = {'content-type': 'application/x-www-form-urlencoded'}
+#    return requests.post(
+#        url,
+#        headers=headers,
+#        data='{"tx": "%s"}' % raw_transaction)
 def broadcast_transaction(tx, network):
+    raw_transaction = b2x(tx.serialize())
+
     if network == 'btc-test3':
-        url = 'https://api.blockcypher.com/v1/btc/test3/txs/push'
+        url = 'https://blockstream.info/testnet/api/tx'
+        headers = {'content-type': 'text/plain'}
+        return requests.post(url, headers=headers, data=raw_transaction)
+
     elif network == 'bcy-test':
         url = 'https://api.blockcypher.com/v1/bcy/test/txs/push'
-    else:
-      raise InvalidArgumentException("Network must be one of either 'btc-test3', 'bcy-test'")
+        headers = {'content-type': 'application/x-www-form-urlencoded'}
+        return requests.post(
+            url,
+            headers=headers,
+            data='{"tx": "%s"}' % raw_transaction
+        )
 
-    raw_transaction = b2x(tx.serialize())
-    headers = {'content-type': 'application/x-www-form-urlencoded'}
-    return requests.post(
-        url,
-        headers=headers,
-        data='{"tx": "%s"}' % raw_transaction)
+    else:
+        raise Exception("Network must be 'btc-test3' or 'bcy-test'")

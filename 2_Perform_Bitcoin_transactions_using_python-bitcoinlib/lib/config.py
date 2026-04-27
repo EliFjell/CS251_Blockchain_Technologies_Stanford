@@ -3,6 +3,14 @@ from bitcoin.base58 import decode
 from bitcoin.core import x
 from bitcoin.wallet import CBitcoinAddress, CBitcoinSecret, P2PKHBitcoinAddress
 
+import os
+from dotenv import load_dotenv
+load_dotenv()
+MY_PRIVATE_KEY = os.getenv("MY_PRIVATE_KEY")
+ALICE_SECRET_KEY_BTC = os.getenv("ALICE_SECRET_KEY_BTC")
+BOB_SECRET_KEY_BTC = os.getenv("BOB_SECRET_KEY_BTC")
+ALICE_SECRET_KEY_BCY = os.getenv("ALICE_SECRET_KEY_BCY")
+BOB_SECRET_KEY_BCY = os.getenv("BOB_SECRET_KEY_BCY")
 
 SelectParams('testnet')
 
@@ -10,7 +18,7 @@ faucet_address = CBitcoinAddress('mohjSavDdQYHRYXcS3uS6ttaHP8amyvX78')
 
 # For questions 1-3, we are using 'btc-test3' network. For question 4, you will
 # set this to be either 'btc-test3' or 'bcy-test'
-network_type = 'btc-test3'
+network_type = 'bcy-test'
 
 
 ######################################################################
@@ -20,8 +28,7 @@ network_type = 'btc-test3'
 # Create a private key and address pair in Base58 with keygen.py
 # Send coins at https://testnet-faucet.mempool.co/
 
-my_private_key = CBitcoinSecret(
-    'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
+my_private_key = CBitcoinSecret(MY_PRIVATE_KEY)
 
 my_public_key = my_private_key.pub
 my_address = P2PKHBitcoinAddress.from_pubkey(my_public_key)
@@ -37,12 +44,10 @@ my_address = P2PKHBitcoinAddress.from_pubkey(my_public_key)
 
 # Only to be imported by alice.py
 # Alice should have coins!!
-alice_secret_key_BTC = CBitcoinSecret(
-    'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
+alice_secret_key_BTC = CBitcoinSecret(ALICE_SECRET_KEY_BTC)
 
 # Only to be imported by bob.py
-bob_secret_key_BTC = CBitcoinSecret(
-    'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
+bob_secret_key_BTC = CBitcoinSecret(BOB_SECRET_KEY_BTC)
 
 # Can be imported by alice.py or bob.py
 alice_public_key_BTC = alice_secret_key_BTC.pub
@@ -67,12 +72,12 @@ bob_address_BTC = P2PKHBitcoinAddress.from_pubkey(bob_public_key_BTC)
 
 # Only to be imported by alice.py
 alice_secret_key_BCY = CBitcoinSecret.from_secret_bytes(
-    x('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'))
+    x(ALICE_SECRET_KEY_BCY))
 
 # Only to be imported by bob.py
 # Bob should have coins!!
 bob_secret_key_BCY = CBitcoinSecret.from_secret_bytes(
-    x('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'))
+    x(BOB_SECRET_KEY_BCY))
 
 # Can be imported by alice.py or bob.py
 alice_public_key_BCY = alice_secret_key_BCY.pub
