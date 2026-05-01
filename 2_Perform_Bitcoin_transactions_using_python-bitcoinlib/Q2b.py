@@ -2,29 +2,27 @@ from sys import exit
 from bitcoin.core.script import *
 
 from lib.utils import *
-from lib.config import (my_private_key, my_public_key, my_address,
-                    faucet_address, network_type)
 from Q1 import P2PKH_scriptPubKey
 from Q2a import Q2a_txout_scriptPubKey
 
+from lib.config import my_address_BCY
 
+network_type = 'bcy-test'
 ######################################################################
-# TODO: set these parameters correctly
-amount_to_send = None # amount of BTC in the output you're sending minus fee
+amount_to_send = 0.00087 # amount of BTC in the output you're sending minus fee
 txid_to_spend = (
-        'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
-utxo_index = None # index of the output you are spending, indices start at 0
+        'c7018d0cb41bbb6a983727d34c0530960ae2b95d88413e25985df0d4f1f8e6c7')
+utxo_index = 0 # index of the output you are spending, indices start at 0
 ######################################################################
 
 txin_scriptPubKey = Q2a_txout_scriptPubKey
 ######################################################################
-# TODO: implement the scriptSig for redeeming the transaction created
-# in  Exercise 2a.
 txin_scriptSig = [
-        # fill this in!
+        1712,
+        -395
 ]
 ######################################################################
-txout_scriptPubKey = P2PKH_scriptPubKey(faucet_address)
+txout_scriptPubKey = P2PKH_scriptPubKey(my_address_BCY)
 
 response = send_from_custom_transaction(
     amount_to_send, txid_to_spend, utxo_index,
