@@ -2,27 +2,28 @@ from sys import exit
 from bitcoin.core.script import *
 
 from lib.utils import *
-from lib.config import (my_private_key, my_public_key, my_address,
-                    faucet_address, network_type)
+from lib.config import (my_address_BCY,
+                        bank_secret_key_BCY,
+                        cust1_secret_key_BCY, cust2_secret_key_BCY, cust3_secret_key_BCY)
 from Q1 import P2PKH_scriptPubKey
-from Q3a import (Q3a_txout_scriptPubKey, cust1_private_key, cust2_private_key,
-                  cust3_private_key)
+from Q3a import Q3a_txout_scriptPubKey
 
+network_type = 'bcy-test'
 
 def multisig_scriptSig(txin, txout, txin_scriptPubKey):
     bank_sig = create_OP_CHECKSIG_signature(txin, txout, txin_scriptPubKey,
-                                             my_private_key)
+                                             bank_secret_key_BCY)
     cust1_sig = create_OP_CHECKSIG_signature(txin, txout, txin_scriptPubKey,
-                                             cust1_private_key)
+                                             cust1_secret_key_BCY)
     cust2_sig = create_OP_CHECKSIG_signature(txin, txout, txin_scriptPubKey,
-                                             cust2_private_key)
+                                             cust2_secret_key_BCY)
     cust3_sig = create_OP_CHECKSIG_signature(txin, txout, txin_scriptPubKey,
-                                             cust3_private_key)
+                                             cust3_secret_key_BCY)
     ######################################################################
-    # TODO: Complete this script to unlock the BTC that was locked in the
-    # multisig transaction created in Exercise 3a.
     return [
-        # fill this in!
+        OP_0,
+        cust2_sig,
+        bank_sig
     ]
     ######################################################################
 
@@ -41,15 +42,14 @@ def send_from_multisig_transaction(amount_to_send, txid_to_spend, utxo_index,
 
 if __name__ == '__main__':
     ######################################################################
-    # TODO: set these parameters correctly
-    amount_to_send = None # amount of BTC in the output you're sending minus fee
+    amount_to_send = 0.00085 # amount of BTC in the output you're sending minus fee
     txid_to_spend = (
-        'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
-    utxo_index = None # index of the output you are spending, indices start at 0
+        '64fc797b3c81407883a35ae4773c28fde869ce4b635d1ba3e105a477178b56d3')
+    utxo_index = 0 # index of the output you are spending, indices start at 0
     ######################################################################
 
     txin_scriptPubKey = Q3a_txout_scriptPubKey
-    txout_scriptPubKey = P2PKH_scriptPubKey(faucet_address)
+    txout_scriptPubKey = P2PKH_scriptPubKey(my_address_BCY)
 
     response = send_from_multisig_transaction(
         amount_to_send, txid_to_spend, utxo_index,

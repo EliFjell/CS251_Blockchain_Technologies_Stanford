@@ -14,6 +14,12 @@ BOB_SECRET_KEY_BCY = os.getenv("BOB_SECRET_KEY_BCY")
 
 MY_SECRET_KEY_BCY = os.getenv("MY_SECRET_KEY_BCY")
 
+BANK_SECRET_KEY_BCY = os.getenv("bank_secret_key_bcy")
+CUST1_SECRET_KEY_BCY = os.getenv("cust1_secret_key_bcy")
+CUST2_SECRET_KEY_BCY = os.getenv("cust2_secret_key_bcy")
+CUST3_SECRET_KEY_BCY = os.getenv("cust3_secret_key_bcy")
+
+
 SelectParams('testnet')
 
 faucet_address = CBitcoinAddress('mohjSavDdQYHRYXcS3uS6ttaHP8amyvX78')
@@ -84,6 +90,15 @@ bob_secret_key_BCY = CBitcoinSecret.from_secret_bytes(
 my_secret_key_BCY = CBitcoinSecret.from_secret_bytes(
     x(MY_SECRET_KEY_BCY))
 
+bank_secret_key_BCY = CBitcoinSecret.from_secret_bytes(
+    x(BANK_SECRET_KEY_BCY))
+cust1_secret_key_BCY = CBitcoinSecret.from_secret_bytes(
+    x(CUST1_SECRET_KEY_BCY))
+cust2_secret_key_BCY = CBitcoinSecret.from_secret_bytes(
+    x(CUST2_SECRET_KEY_BCY))
+cust3_secret_key_BCY = CBitcoinSecret.from_secret_bytes(
+    x(CUST3_SECRET_KEY_BCY))
+
 # Can be imported by alice.py or bob.py
 alice_public_key_BCY = alice_secret_key_BCY.pub
 alice_address_BCY = P2PKHBitcoinAddress.from_pubkey(alice_public_key_BCY)
@@ -93,4 +108,13 @@ bob_address_BCY = P2PKHBitcoinAddress.from_pubkey(bob_public_key_BCY)
 
 my_public_key_BCY = my_secret_key_BCY.pub
 my_address_BCY = P2PKHBitcoinAddress.from_pubkey(my_public_key_BCY)
+
+bank_public_key_BCY = bank_secret_key_BCY.pub
+bank_address_BCY = P2PKHBitcoinAddress.from_pubkey(bank_public_key_BCY)
+cust1_public_key_BCY = cust1_secret_key_BCY.pub
+cust1_address_BCY = P2PKHBitcoinAddress.from_pubkey(cust1_public_key_BCY)
+cust2_public_key_BCY = cust2_secret_key_BCY.pub
+cust2_address_BCY = P2PKHBitcoinAddress.from_pubkey(cust2_public_key_BCY)
+cust3_public_key_BCY = cust1_secret_key_BCY.pub
+cust3_address_BCY = P2PKHBitcoinAddress.from_pubkey(cust3_public_key_BCY)
 ######################################################################
